@@ -1,6 +1,20 @@
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
 
+dotenv.config();
+connectDB();
 
-console.log('backend')
+const app = express();
 
+app.use(cors());
+app.use(express.json());
 
-console.log('tayyaba')
+// API Routes
+app.use("/api/auth", authRoutes);
+
+app.listen(process.env.PORT, () =>
+  console.log(`🚀 Server running on port ${process.env.PORT}`)
+);
