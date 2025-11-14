@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 // Register Admin (only for first time)
 exports.registerAdmin = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
 
     const adminExists = await Admin.findOne({ email });
     if (adminExists) {
@@ -15,7 +15,8 @@ exports.registerAdmin = async (req, res) => {
     const hashedPass = await bcrypt.hash(password, 10);
 
     const newAdmin = new Admin({
-      email,
+      name: name ? name : '',
+      email: email,
       password: hashedPass,
     });
 
