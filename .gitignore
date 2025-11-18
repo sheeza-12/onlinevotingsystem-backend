@@ -1,3 +1,4 @@
+
 /node_modules
 
 //node_modules
@@ -9,3 +10,8 @@
 //package-lock.json
 
 / .env
+# =======
+# //node module
+# //pakages-lock json
+# //.env
+# >>>>>>> 552b49b4a7121a8763955ccfdb67219fd8ac2a11
