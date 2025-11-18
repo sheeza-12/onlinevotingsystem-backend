@@ -7,7 +7,7 @@ const connectDB = async () => {
     console.log("✅ MongoDB Connected");
   } catch (err) {
     console.error("❌ Mongo Error:", err);
-// =======
+
 // const mongoose = require('mongoose');
 
 // const connectDB = async () => {
@@ -24,6 +24,4 @@ const connectDB = async () => {
   }
 };
 
-
 module.exports = connectDB;
-
