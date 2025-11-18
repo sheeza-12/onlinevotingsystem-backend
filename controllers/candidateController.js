@@ -2,9 +2,6 @@ const Candidate = require('../models/candidate');
 const fs = require('fs');
 const path = require('path');
 
-// @desc    Add new candidate
-// @route   POST /api/candidates/add
-// @access  Private
 const addCandidate = async (req, res) => {
   try {
     const { role, name, partyId, partyName, email, city, electionType } = req.body;
