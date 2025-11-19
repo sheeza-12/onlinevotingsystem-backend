@@ -35,6 +35,7 @@ exports.loginAdmin = async (req, res) => {
     const { email, password } = req.body;
 
     const admin = await Admin.findOne({ email });
+    console.log('email===========',admin);
 
     if (!admin) {
       return res.json({ success: false, message: "Admin not found" });
