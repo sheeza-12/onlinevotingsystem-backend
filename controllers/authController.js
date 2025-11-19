@@ -8,6 +8,36 @@ const { sendEmail } = require("../utils/sendEmail");
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
 /**
+ * Create Admin (admin only)
+ * body: { firstname, lastname, email, password }
+ */
+exports.createAdmin = async (req, res) => {
+  try {
+    const { firstname, lastname, email, password } = req.body;
+
+    let existing = await User.findOne({ email });
+    if (existing) return res.status(400).json({ message: "Email already exists" });
+
+    const hashed = await bcrypt.hash(password, 10);
+
+    const admin = await User.create({
+      firstname,
+      lastname,
+      fullname: `${firstname} ${lastname}`,
+      email,
+      password: hashed,
+      role: "admin",
+      isVerified: true // admins don’t need OTP
+    });
+
+    res.status(201).json({ success: true, admin });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+/**
  * Signup Request: create user skeleton, generate OTP, send email
  * body: { firstname, lastname, email, cnic, role = 'voter' }
  */

@@ -5,6 +5,7 @@ const authCtrl = require("../controllers/authController");
 const auth = require("../middleware/auth");
 const role = require("../middleware/role");
 
+router.post("/admin/create", auth, role("admin"), authCtrl.createAdmin);
 router.post("/signup/request", authCtrl.signupRequest);
 router.post("/signup/verify", authCtrl.verifyOtp);
 router.post("/login", authCtrl.login);
