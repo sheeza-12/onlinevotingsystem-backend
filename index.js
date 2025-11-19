@@ -6,10 +6,10 @@ const partyRoutes = require('./routes/partyRoutes');
 const authRoutes = require("./routes/authRoutes");
 const path = require('path');
 
-dotenv.config();
-connectDB();
+// dotenv.config();
+// connectDB();
 
-const app = express();
+// const app = express();
 
 app.use(cors());
 app.use(express.json());
