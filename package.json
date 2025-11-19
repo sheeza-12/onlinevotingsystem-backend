@@ -30,5 +30,9 @@
   "bugs": {
     "url": "https://github.com/sheeza-12/onlinevotingsystem-backend/issues"
   },
-  "homepage": "https://github.com/sheeza-12/onlinevotingsystem-backend#readme"
-}
+  "homepage": "https://github.com/sheeza-12/onlinevotingsystem-backend#readme",
+    "mongoose": "^8.20.0",
+    "nodemailer": "^7.0.10",
+    "socket.io": "^4.8.1"
+  }
+
