@@ -13,6 +13,8 @@ const path = require('path');
 
 // const app = express();
 
+
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -33,9 +35,6 @@ app.listen(process.env.PORT, () =>
   console.log(`🚀 Server running on port ${process.env.PORT}`)
 );
 
-const app = express();
-app.use(express.json());
-app.use(cors());
 
 const http = require("http").createServer(app);
 const { Server } = require("socket.io");
