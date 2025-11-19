@@ -1,12 +1,13 @@
+// backend/routes/authRoutes.js
 const express = require("express");
-const { registerAdmin, loginAdmin } = require("../controllers/authController");
-
 const router = express.Router();
+const authCtrl = require("../controllers/authController");
+const auth = require("../middleware/auth");
+const role = require("../middleware/role");
 
-// Register Admin (use only 1 time)
-router.post("/register", registerAdmin);
-
-// Login Admin
-router.post("/login", loginAdmin);
+router.post("/signup/request", authCtrl.signupRequest);
+router.post("/signup/verify", authCtrl.verifyOtp);
+router.post("/login", authCtrl.login);
+router.get("/voters", auth, role("admin"), authCtrl.getAllVoters);
 
 module.exports = router;
