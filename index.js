@@ -1,60 +1,44 @@
-
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const connectDB = require("./config/db");
-const partyRoutes = require('./routes/partyRoutes');
-const authRoutes = require("./routes/authRoutes");
-const path = require('path');
+const path = require("path");
 
-// dotenv.config();
-// connectDB();
-
-// const app = express();
-
+dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from uploads folder
+// Static folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Root route
+// Root
 app.get('/', (req, res) => {
   res.json({ message: 'Voting System Backend API' });
 });
 
-// API Routes
-app.use("/api/auth", authRoutes);
-app.use('/api/party', partyRoutes);
+// ROUTES
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/party", require("./routes/partyRoutes"));
+app.use("/api/cnic", require("./routes/cnicRoutes"));
 
-app.listen(process.env.PORT, () =>
-  console.log(`🚀 Server running on port ${process.env.PORT}`)
-);
-
-
+// Socket.io setup
 const http = require("http").createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(http, { cors: { origin: "*" } });
-
-// attach io
 app.set("io", io);
+
 io.on("connection", socket => {
   console.log("socket connected:", socket.id);
   socket.on("disconnect", () => console.log("socket disconnected:", socket.id));
 });
 
-// routes
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/cnic", require("./routes/cnicRoutes"));
-
-// connect db
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// Database connect
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("MongoDB connect error:", err));
+  .catch(err => console.error("MongoDB connection error:", err));
 
 const PORT = process.env.PORT || 5000;
-http.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+http.listen(PORT, () => console.log(`🚀 Server running on ${PORT}`));
