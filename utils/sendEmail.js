@@ -1,23 +1,24 @@
-// backend/utils/sendEmail.js
 const nodemailer = require("nodemailer");
 
-exports.sendEmail = async ({ to, subject, html }) => {
+const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
-    secure: process.env.EMAIL_PORT == 465, // true for 465, false for other ports
+    secure: true, // Gmail uses SSL on 465
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
     }
   });
 
-  const info = await transporter.sendMail({
+  const mailOptions = {
     from: process.env.EMAIL_FROM,
-    to,
-    subject,
-    html
-  });
+    to: options.email,
+    subject: options.subject,
+    html: options.message,
+  };
 
-  return info;
+  await transporter.sendMail(mailOptions);
 };
+
+module.exports = sendEmail;
